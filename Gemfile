@@ -56,6 +56,8 @@ group :development, :test do
   gem "faker", "~> 3.5.1"
   gem "factory_bot_rails", "~> 6.5.0"
   gem "byebug"
+  gem "vcr", "~> 6.3.1"
+  gem "webmock", "~> 3.25.1"
 end
 
 group :development do
