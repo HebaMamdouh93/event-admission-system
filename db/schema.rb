@@ -10,8 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 0) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_15_073651) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
+  create_table "tickets", force: :cascade do |t|
+    t.integer "tito_ticket_id"
+    t.string "tito_ticket_slug"
+    t.string "email"
+    t.string "name"
+    t.string "phone_number"
+    t.string "state"
+    t.datetime "tito_created_at"
+    t.jsonb "tito_info"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 end
