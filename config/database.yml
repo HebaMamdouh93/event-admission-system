@@ -18,11 +18,12 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  url: <%= ENV["DATABASE_URL"] %>
 
 
 development:
   <<: *default
-  database: event_admission_system_development
+  database: event_admission_development
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -56,7 +57,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: event_admission_system_test
+  database: event_admission_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -81,8 +82,8 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: event_admission_system_production
-    username: event_admission_system
+    database: event_admission_production
+    username: event_admission
     password: <%= ENV["EVENT_ADMISSION_SYSTEM_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production

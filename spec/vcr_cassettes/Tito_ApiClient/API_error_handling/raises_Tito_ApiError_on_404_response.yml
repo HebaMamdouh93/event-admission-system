@@ -1,0 +1,35 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.tito.io/v3/event-admission/mouse-droid-imperial-star-destroyer-conference-2025/tickets/non-existent-slug-xyz
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Token token=<TITO_API_TOKEN>
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Tue, 15 Jul 2025 15:27:21 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{ "message": "The page you''re looking for could not be found" }'
+  recorded_at: Tue, 15 Jul 2025 15:27:21 GMT
+recorded_with: VCR 6.3.1

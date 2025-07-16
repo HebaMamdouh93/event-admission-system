@@ -1,0 +1,30 @@
+FROM ruby:3.2.8
+
+WORKDIR /app
+
+# Install system packages
+RUN apt-get update -qq && apt-get install -y \
+  redis-tools build-essential libpq-dev nodejs yarn git vim curl postgresql-client \
+  && rm -rf /var/lib/apt/lists/*
+
+# Set dev environment
+ENV RAILS_ENV=development \
+    BUNDLE_JOBS=4 \
+    BUNDLE_RETRY=3
+
+# Install gems
+COPY Gemfile Gemfile.lock ./
+RUN bundle install
+
+# Copy full app
+COPY . .
+
+# Remove existing pid
+RUN mkdir -p tmp/pids
+
+# Entrypoint script
+COPY bin/docker-entrypoint /usr/bin/rails-entrypoint
+RUN chmod +x /usr/bin/rails-entrypoint
+
+ENTRYPOINT ["bin/docker-entrypoint"]
+CMD ["rails", "server", "-b", "0.0.0.0", "-p", "3000"]
