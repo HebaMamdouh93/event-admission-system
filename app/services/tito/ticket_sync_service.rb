@@ -6,7 +6,6 @@ module Tito
 
     def call
       ticket = Ticket.find_or_initialize_by(tito_ticket_id: @data["id"])
-
       ticket.assign_attributes(mapped_attributes)
 
       if ticket.save
@@ -19,7 +18,7 @@ module Tito
     private
 
     def mapped_attributes
-      {
+      attributes = {
         tito_ticket_slug: @data["slug"],
         tito_ticket_id: @data["id"],
         email: @data["email"],
@@ -29,6 +28,11 @@ module Tito
         tito_created_at: @data["created_at"],
         tito_info: @data
       }
+      user = User.by_email(@data["email"]).first if @data["email"]
+      unless user.nil?
+        attributes.merge!({ user_id: user.id })
+      end
+      attributes
     end
   end
 end
