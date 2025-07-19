@@ -24,4 +24,5 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Ticket < ApplicationRecord
+  belongs_to :user, optional: true
 end
