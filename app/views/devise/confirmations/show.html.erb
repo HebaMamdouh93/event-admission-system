@@ -1,0 +1,12 @@
+<% if resource.errors.empty? %>
+  <h1>Email Confirmation Successful</h1>
+  <p>Your email has been successfully confirmed.</p>
+<% else %>
+  <h1>Confirmation Failed</h1>
+  <p>We couldn't confirm your email because of the following error(s):</p>
+  <ul>
+    <% resource.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
