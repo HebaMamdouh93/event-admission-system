@@ -3,6 +3,14 @@ openapi: 3.0.1
 info:
   title: API V1
   version: v1
+components:
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+- bearer_auth: []
 paths:
   "/api/v1/auth/register":
     post:
@@ -136,5 +144,77 @@ paths:
                   data:
                     type: object
                     nullable: true
+  "/api/v1/profile":
+    get:
+      summary: Get current user profile
+      tags:
+      - Profile
+      security:
+      - Bearer: []
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Profile retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Profile retrieved successfully
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      email:
+                        type: string
+                        example: user@example.com
+                      tickets:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            tito_ticket_id:
+                              type: integer
+                              example: 1234567890
+                            state:
+                              type: string
+                              example: complete
+                            email:
+                              type: string
+                              example: user@example.com
+                            phone_number:
+                              type: string
+                              example: '1234567890'
+                            name:
+                              type: string
+                              example: sdf gds
+                            tito_ticket_slug:
+                              type: string
+                              example: ti_test_p2mLWs2lzdVBgdWPoHry6jw
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: You need to sign in or sign up before continuing.
+                  errors:
+                    type: array
+                    items:
+                      type: string
 servers:
 - url: http://localhost:3000

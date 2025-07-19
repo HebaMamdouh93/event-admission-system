@@ -33,5 +33,6 @@ FactoryBot.define do
     state { "complete" }
     tito_created_at { Faker::Time.backward(days: 365) }
     tito_info { {} }
+    association :user
   end
 end
