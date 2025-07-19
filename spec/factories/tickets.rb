@@ -13,6 +13,15 @@
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  tito_ticket_id   :integer
+#  user_id          :bigint
+#
+# Indexes
+#
+#  index_tickets_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
 #
 FactoryBot.define do
   factory :ticket do
@@ -24,5 +33,6 @@ FactoryBot.define do
     state { "complete" }
     tito_created_at { Faker::Time.backward(days: 365) }
     tito_info { {} }
+    association :user
   end
 end

@@ -41,6 +41,12 @@ gem "thruster", require: false
 # gem "image_processing", "~> 1.2"
 gem "httparty", "~> 0.23.1"
 gem "sidekiq", "~> 8.0.4"
+gem "devise", "~> 4.9.4"
+gem "devise-jwt", "~> 0.12.1"
+gem "active_model_serializers", "~> 0.10.15"
+gem 'rswag', "~> 2.16.0"
+
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
