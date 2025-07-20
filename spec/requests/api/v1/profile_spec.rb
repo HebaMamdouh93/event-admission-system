@@ -24,7 +24,7 @@ RSpec.describe "Api::V1::Profile", type: :request do
 
     context "when unauthenticated" do
       it "returns 401 unauthorized" do
-        get "/api/v1/profile"
+        get "/api/v1/profile", headers: { "Accept" => "application/json" }
         expect(response).to have_http_status(:unauthorized)
       end
     end

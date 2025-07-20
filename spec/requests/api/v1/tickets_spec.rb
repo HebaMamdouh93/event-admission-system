@@ -33,7 +33,7 @@ RSpec.describe "API::V1::Tickets", type: :request do
 
     context "when user is unauthenticated" do
       it "returns 401 unauthorized" do
-        get "/api/v1/tickets/1" 
+        get "/api/v1/tickets/1", headers: { "Accept" => "application/json" }
 
         expect(response).to have_http_status(:unauthorized)
       end
