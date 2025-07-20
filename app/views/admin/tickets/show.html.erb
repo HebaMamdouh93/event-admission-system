@@ -1,0 +1,9 @@
+<h1>Ticket Details</h1>
+
+<p><strong>Ticket ID:</strong> <%= @ticket.tito_ticket_id %></p>
+<p><strong>Status:</strong> <%= @ticket.state %></p>
+<p><strong>Name:</strong> <%= @ticket.name %></p>
+<p><strong>Email:</strong> <%= @ticket.email %></p>
+<p><strong>Phone Number:</strong> <%= @ticket.phone_number %></p>
+
+<%= link_to "Back to Dashboard", admin_dashboard_path %>
