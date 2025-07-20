@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
-  devise_for :users
+  devise_for :users, controllers: {
+    confirmations: 'users/confirmations'
+  }, skip: [:sessions, :registrations, :passwords]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -21,6 +23,18 @@ Rails.application.routes.draw do
   ##### Webhooks Endpoints #####
   post "/webhooks/tito/sync_tickets", to: "webhooks/tito#sync_tickets"
 
+  ##### Admin Endpoints #####
+  devise_for :admins
+
+  namespace :admin do
+    get 'dashboard', to: 'dashboard#index'
+    resources :tickets, only: [:index, :show, :destroy]
+  end
+
+  
+  ##### API Endpoints #####
+
+  # API v1
   namespace :api do
     namespace :v1 do
       namespace :auth do
