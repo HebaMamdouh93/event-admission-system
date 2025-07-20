@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       namespace :auth do
         devise_for :users,
+          skip: [:confirmations],
           path: "",
           path_names: {
             sign_in: "login",
