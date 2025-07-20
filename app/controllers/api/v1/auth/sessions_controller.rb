@@ -1,5 +1,5 @@
 class Api::V1::Auth::SessionsController < Devise::SessionsController
-  include ApiResponse
+  include ExceptionHandler
   skip_before_action :verify_authenticity_token
   respond_to :json
 
@@ -22,7 +22,8 @@ class Api::V1::Auth::SessionsController < Devise::SessionsController
     end
   end
 
-  def respond_to_on_destroy
+  def destroy
+    sign_out(:user) 
     render_success(message: "Logged out successfully")
   end
 

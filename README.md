@@ -18,6 +18,29 @@ This is a Ruby on Rails 8 application that integrates with [Tito](https://ti.to/
 * View authenticated user profile and ticket details
 * Dockerize app
 
+## Features
+
+### Tito Integration
+
+* Sync all Tito tickets into the local database
+* Handle real-time updates using Tito webhooks
+* Verify webhook signatures using HMAC SHA256
+* Background processing via Sidekiq
+* Dockerized for local development
+
+### User Portal (API Only)
+
+* JWT-based authentication for registration & login
+* Email confirmation via Devise
+* View profile & ticket details
+
+### Admin Portal (Web UI)
+
+* Traditional web interface for managing tickets
+* Devise-based authentication (session-based)
+* Ticket listing, details view, and soft deletion with pagination
+
+
 ---
 
 ## Technologies Used
@@ -29,6 +52,8 @@ This is a Ruby on Rails 8 application that integrates with [Tito](https://ti.to/
 * **Devise + devise-jwt**
 * **HTTParty**
 * **ActiveModelSerializers**
+* **Pagy** for pagination
+* **Paranoia** gem for soft deletion
 * **Swagger + rswag** for API documentation
 * **Docker / Docker Compose**
 * **VCR / RSpec / FactoryBot / Shoulda-Matchers** for test coverage
@@ -151,6 +176,86 @@ Set it to match `TITO_WEBHOOK_SECURITY_TOKEN` in your `.env`.
 * Requires authentication.
 * Returns details of a specific ticket belonging to the current user.
 
+---
+
+##  Admin Portal (Web Interface)
+
+### 1. Admin Authentication
+
+* Uses standard Devise (session-based)
+* Admins are created manually or via seeds
+
+**Create default admin via seed:**
+
+```ruby
+# db/seeds.rb
+Admin.find_or_create_by!(email: "admin@example.com") do |admin|
+  admin.password = "pass@1234"
+  admin.password_confirmation = "pass@1234"
+end
+
+docker exec -it event-admission-system_web_1 bash
+rails db:seed
+```
+
+### 2. Admin Login
+
+* Visit: `http://localhost:3000/admins/sign_in`
+* Admin credentials: `admin@example.com` / `pass@1234`
+
+### 3. Admin Dashboard
+
+* After login, redirected to `/admin/dashboard`
+* Lists all non-deleted tickets
+* Uses `pagy` for pagination
+* Logout link provided at the top
+
+### 4. Ticket Management
+
+#### View All Tickets
+
+* Table view with ticket ID, name, email, and state
+* Paginated using `pagy`
+
+#### View Ticket Details
+
+* Click "Details" link on any ticket row to view full info
+* Includes: ticket ID, status, name, email, phone
+
+#### Soft Delete Ticket
+
+* Clicking "Delete" action
+* Uses `paranoia` gem to soft-delete (via `deleted_at`)
+* Ticket is hidden from admin list but preserved in DB
+
+---
+
+## Soft Deletion with `paranoia`
+
+```ruby
+# app/models/ticket.rb
+acts_as_paranoid
+```
+
+Tickets are never truly deleted — instead `deleted_at` is set.
+
+To see deleted records (for debugging):
+
+```ruby
+Ticket.with_deleted
+```
+
+---
+
+## Pagination with Pagy
+
+```ruby
+# controller
+@pagy, @tickets = pagy(Ticket.order(created_at: :desc))
+
+# view
+<%= pagy_nav(@pagy) %>
+```
 ---
 
 ## Swagger API Documentation

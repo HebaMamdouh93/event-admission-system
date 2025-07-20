@@ -45,6 +45,8 @@ gem "devise", "~> 4.9.4"
 gem "devise-jwt", "~> 0.12.1"
 gem "active_model_serializers", "~> 0.10.15"
 gem 'rswag', "~> 2.16.0"
+gem 'pagy', "~> 9.3.5"
+gem 'paranoia', "~> 3.0.1"
 
 
 group :development, :test do

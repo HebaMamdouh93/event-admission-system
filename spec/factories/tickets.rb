@@ -3,6 +3,7 @@
 # Table name: tickets
 #
 #  id               :bigint           not null, primary key
+#  deleted_at       :datetime
 #  email            :string
 #  name             :string
 #  phone_number     :string
@@ -17,7 +18,8 @@
 #
 # Indexes
 #
-#  index_tickets_on_user_id  (user_id)
+#  index_tickets_on_deleted_at  (deleted_at)
+#  index_tickets_on_user_id     (user_id)
 #
 # Foreign Keys
 #
