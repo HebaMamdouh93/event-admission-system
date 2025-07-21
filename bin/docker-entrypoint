@@ -15,8 +15,8 @@ echo "Postgres is up - running Sidekiq"
 bundle install
 
 # Run any pending migrations
-bundle exec rails db:migrate
-bundle exec rails db:seed
+bundle exec rails db:prepare
+
 
 # Execute the container’s main process
 exec "$@"
