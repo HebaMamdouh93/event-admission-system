@@ -40,7 +40,7 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 gem "httparty", "~> 0.23.1"
-gem "sidekiq", "~> 8.0.4"
+gem "sidekiq", "~> 8.0.7"
 gem "devise", "~> 4.9.4"
 gem "devise-jwt", "~> 0.12.1"
 gem "active_model_serializers", "~> 0.10.15"
